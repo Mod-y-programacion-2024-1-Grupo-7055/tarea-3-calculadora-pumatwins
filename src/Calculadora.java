@@ -56,7 +56,7 @@ public class Calculadora{
         for (String cad : botones) {
             JButton boton = new JButton(cad);
             boton.addActionListener(new ButtonClickListener());
-            boton.setFont(new Font("Arial", Font.PLAIN, 12));
+            boton.setFont(new Font("Serif", Font.PLAIN, 12));
             panel.add(boton);
         }
 
