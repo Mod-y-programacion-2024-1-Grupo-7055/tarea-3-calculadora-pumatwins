@@ -11,7 +11,6 @@ public class Calculadora{
 
     static Compilador comp;
     static StringBuilder sb; 
-    static CompositeEA nodo;
 
     public static void main(String[] args) {
         sb = new StringBuilder();
@@ -93,13 +92,11 @@ public class Calculadora{
         try{
             comp = new Compilador();
             StringTokenizer lexemas = comp.analisisLexico(oper);
-            nodo = comp.arbolDeAnalisisSintactico(lexemas);
-            texto.setText(String.valueOf(nodo +" = "+ nodo.evalua()));
+            CompositeEA nodo = comp.arbolDeAnalisisSintactico(lexemas);
+            texto.setText(String.valueOf(nodo.evalua()));
             sb = new StringBuilder();
         }catch (ErrorDeSintaxisException w){
-            texto.setText("|| E R R O R ||");
       }
     }
   }
 }
-

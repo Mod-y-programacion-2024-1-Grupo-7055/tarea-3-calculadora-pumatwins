@@ -20,7 +20,11 @@ public class Compilador {
      */
     public StringTokenizer analisisLexico(String cadena) {
         cadena = cadena.replace(" ", "");
-        StringTokenizer tokenizer = new StringTokenizer(cadena, "()\\+\\*\\-\\/", true);
+        cadena = cadena.replace("sqrt", "r");
+        cadena = cadena.replace("tan", "t");
+        cadena = cadena.replace("cos", "c");
+        cadena = cadena.replace("sen", "s");
+        StringTokenizer tokenizer = new StringTokenizer(cadena, "r\\t\\c\\s\\()\\+\\*\\-\\/", true);
         return tokenizer;
     }
 
@@ -45,7 +49,6 @@ public class Compilador {
             CompositeEA n;
             NodoOperador no;
             String actual = tokenizer.nextToken();
-            
 
             if (actual.equals(")")) {
                 casoParentesisDerecho(operadores, salida);
@@ -83,8 +86,8 @@ public class Compilador {
             Stack<CompositeEA> salida, NodoOperador no) throws ErrorDeSintaxisException {
         while (!operadores.empty()) {
             NodoOperador top = operadores.pop();
-            if ((top.getPrecedence() <= no.getPrecedence() || (top instanceof NodoParentesis))
-                    && top.getPrecedence() != 3) {
+            if ((top.getPrecedence() < no.getPrecedence() || (top instanceof NodoParentesis))
+                    && top.getPrecedence() != 4) {
                 operadores.push(top);
                 break;
             } else {
@@ -98,7 +101,7 @@ public class Compilador {
         try {
             CompositeEA der = salida.pop();
             op.setDer(der);
-            if (op.getPrecedence() < 3) {
+            if (op.getPrecedence() < 2) {
                 CompositeEA izq = salida.pop();
                 op.setIzq(izq);
             }
